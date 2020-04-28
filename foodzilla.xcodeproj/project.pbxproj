@@ -14,6 +14,9 @@
 		AC0303E72452609100309585 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AC0303E62452609100309585 /* Assets.xcassets */; };
 		AC0303EA2452609100309585 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AC0303E82452609100309585 /* LaunchScreen.storyboard */; };
 		AC44DDA024579E2500188FDE /* DetailVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC44DD9F24579E2500188FDE /* DetailVC.swift */; };
+		ACE544B02458E0C000848851 /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACE544AF2458E0C000848851 /* Item.swift */; };
+		ACE544B22458E17000848851 /* FoodItems.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACE544B12458E17000848851 /* FoodItems.swift */; };
+		ACE544B42458E2B400848851 /* ItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACE544B32458E2B400848851 /* ItemCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,6 +29,9 @@
 		AC0303E92452609100309585 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		AC0303EB2452609100309585 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		AC44DD9F24579E2500188FDE /* DetailVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailVC.swift; sourceTree = "<group>"; };
+		ACE544AF2458E0C000848851 /* Item.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Item.swift; sourceTree = "<group>"; };
+		ACE544B12458E17000848851 /* FoodItems.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodItems.swift; sourceTree = "<group>"; };
+		ACE544B32458E2B400848851 /* ItemCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -58,16 +64,51 @@
 		AC0303DC2452608E00309585 /* foodzilla */ = {
 			isa = PBXGroup;
 			children = (
+				ACE544AE2458E0AF00848851 /* Helpers */,
+				ACE544AD2458E09F00848851 /* Model */,
+				ACE544AC2458E09700848851 /* View */,
+				ACE544AB2458E07D00848851 /* Controller */,
 				AC0303DD2452608E00309585 /* AppDelegate.swift */,
 				AC0303DF2452608E00309585 /* SceneDelegate.swift */,
-				AC0303E12452608E00309585 /* StorefrontVC.swift */,
 				AC0303E32452608E00309585 /* Main.storyboard */,
 				AC0303E62452609100309585 /* Assets.xcassets */,
 				AC0303E82452609100309585 /* LaunchScreen.storyboard */,
 				AC0303EB2452609100309585 /* Info.plist */,
-				AC44DD9F24579E2500188FDE /* DetailVC.swift */,
 			);
 			path = foodzilla;
+			sourceTree = "<group>";
+		};
+		ACE544AB2458E07D00848851 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				AC0303E12452608E00309585 /* StorefrontVC.swift */,
+				AC44DD9F24579E2500188FDE /* DetailVC.swift */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		ACE544AC2458E09700848851 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				ACE544B32458E2B400848851 /* ItemCell.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		ACE544AD2458E09F00848851 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				ACE544AF2458E0C000848851 /* Item.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		ACE544AE2458E0AF00848851 /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				ACE544B12458E17000848851 /* FoodItems.swift */,
+			);
+			path = Helpers;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -141,8 +182,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				ACE544B02458E0C000848851 /* Item.swift in Sources */,
 				AC0303E22452608E00309585 /* StorefrontVC.swift in Sources */,
+				ACE544B22458E17000848851 /* FoodItems.swift in Sources */,
 				AC44DDA024579E2500188FDE /* DetailVC.swift in Sources */,
+				ACE544B42458E2B400848851 /* ItemCell.swift in Sources */,
 				AC0303DE2452608E00309585 /* AppDelegate.swift in Sources */,
 				AC0303E02452608E00309585 /* SceneDelegate.swift in Sources */,
 			);

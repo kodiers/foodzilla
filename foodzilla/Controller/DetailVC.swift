@@ -17,10 +17,16 @@ class DetailVC: UIViewController {
     @IBOutlet weak var buyItemBtn: UIButton!
     @IBOutlet weak var hideAddBtn: UIButton!
     
+    public private(set) var item: Item!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+        itemImageView.image = item.image
+        itemNameLbl.text = item.name
+        itemPriceLbl.text = String(describing: item.price)
+        buyItemBtn.setTitle("Buy this item for $\(item.price)", for: .normal)
     }
     
 
@@ -43,4 +49,8 @@ class DetailVC: UIViewController {
     @IBAction func closeBtnWasPressed(_ sender: Any) {
         dismiss(animated: true, completion: nil)
     }
+    
+    func initData(forItem item: Item) {
+        self.item = item
+       }
 }

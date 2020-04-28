@@ -23,7 +23,7 @@ class StorefrontVC: UIViewController, UICollectionViewDelegate, UICollectionView
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 0
+        return foodItems.count
     }
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
@@ -31,7 +31,19 @@ class StorefrontVC: UIViewController, UICollectionViewDelegate, UICollectionView
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        return UICollectionViewCell()
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "itemCell", for: indexPath) as? ItemCell else {
+            return UICollectionViewCell()
+        }
+        cell.configureCell(forItem: foodItems[indexPath.row])
+        return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        guard let detailVc = storyboard?.instantiateViewController(identifier: "detailVC") as? DetailVC else {
+            return
+        }
+        detailVc.initData(forItem: foodItems[indexPath.row])
+        present(detailVc, animated: true, completion: nil)
     }
     
 }
