@@ -13,6 +13,10 @@
 		AC0303E52452608E00309585 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AC0303E32452608E00309585 /* Main.storyboard */; };
 		AC0303E72452609100309585 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AC0303E62452609100309585 /* Assets.xcassets */; };
 		AC0303EA2452609100309585 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AC0303E82452609100309585 /* LaunchScreen.storyboard */; };
+		AC242764245A2E24002D5A49 /* IAPService.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC242763245A2E24002D5A49 /* IAPService.swift */; };
+		AC242766245A2F62002D5A49 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC242765245A2F62002D5A49 /* Constants.swift */; };
+		AC242769245A36D5002D5A49 /* Product.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC242768245A36D5002D5A49 /* Product.swift */; };
+		AC24276B245A36ED002D5A49 /* PurchaseStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC24276A245A36ED002D5A49 /* PurchaseStatus.swift */; };
 		AC44DDA024579E2500188FDE /* DetailVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC44DD9F24579E2500188FDE /* DetailVC.swift */; };
 		ACE544B02458E0C000848851 /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACE544AF2458E0C000848851 /* Item.swift */; };
 		ACE544B22458E17000848851 /* FoodItems.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACE544B12458E17000848851 /* FoodItems.swift */; };
@@ -28,6 +32,10 @@
 		AC0303E62452609100309585 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		AC0303E92452609100309585 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		AC0303EB2452609100309585 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		AC242763245A2E24002D5A49 /* IAPService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IAPService.swift; sourceTree = "<group>"; };
+		AC242765245A2F62002D5A49 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		AC242768245A36D5002D5A49 /* Product.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Product.swift; sourceTree = "<group>"; };
+		AC24276A245A36ED002D5A49 /* PurchaseStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PurchaseStatus.swift; sourceTree = "<group>"; };
 		AC44DD9F24579E2500188FDE /* DetailVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailVC.swift; sourceTree = "<group>"; };
 		ACE544AF2458E0C000848851 /* Item.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Item.swift; sourceTree = "<group>"; };
 		ACE544B12458E17000848851 /* FoodItems.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodItems.swift; sourceTree = "<group>"; };
@@ -64,6 +72,8 @@
 		AC0303DC2452608E00309585 /* foodzilla */ = {
 			isa = PBXGroup;
 			children = (
+				AC242767245A36C6002D5A49 /* Enums */,
+				AC242762245A2E11002D5A49 /* Services */,
 				ACE544AE2458E0AF00848851 /* Helpers */,
 				ACE544AD2458E09F00848851 /* Model */,
 				ACE544AC2458E09700848851 /* View */,
@@ -76,6 +86,23 @@
 				AC0303EB2452609100309585 /* Info.plist */,
 			);
 			path = foodzilla;
+			sourceTree = "<group>";
+		};
+		AC242762245A2E11002D5A49 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				AC242763245A2E24002D5A49 /* IAPService.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		AC242767245A36C6002D5A49 /* Enums */ = {
+			isa = PBXGroup;
+			children = (
+				AC242768245A36D5002D5A49 /* Product.swift */,
+				AC24276A245A36ED002D5A49 /* PurchaseStatus.swift */,
+			);
+			path = Enums;
 			sourceTree = "<group>";
 		};
 		ACE544AB2458E07D00848851 /* Controller */ = {
@@ -107,6 +134,7 @@
 			isa = PBXGroup;
 			children = (
 				ACE544B12458E17000848851 /* FoodItems.swift */,
+				AC242765245A2F62002D5A49 /* Constants.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -185,10 +213,14 @@
 				ACE544B02458E0C000848851 /* Item.swift in Sources */,
 				AC0303E22452608E00309585 /* StorefrontVC.swift in Sources */,
 				ACE544B22458E17000848851 /* FoodItems.swift in Sources */,
+				AC24276B245A36ED002D5A49 /* PurchaseStatus.swift in Sources */,
 				AC44DDA024579E2500188FDE /* DetailVC.swift in Sources */,
 				ACE544B42458E2B400848851 /* ItemCell.swift in Sources */,
 				AC0303DE2452608E00309585 /* AppDelegate.swift in Sources */,
+				AC242764245A2E24002D5A49 /* IAPService.swift in Sources */,
+				AC242769245A36D5002D5A49 /* Product.swift in Sources */,
 				AC0303E02452608E00309585 /* SceneDelegate.swift in Sources */,
+				AC242766245A2F62002D5A49 /* Constants.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

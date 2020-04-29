@@ -8,7 +8,7 @@
 
 import UIKit
 
-class StorefrontVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource {
+class StorefrontVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource  {
 
     @IBOutlet weak var collectionView: UICollectionView!
     
@@ -17,6 +17,9 @@ class StorefrontVC: UIViewController, UICollectionViewDelegate, UICollectionView
         // Do any additional setup after loading the view.
         collectionView.delegate = self
         collectionView.dataSource = self
+        
+        IAPService.instance.delegate = self
+        IAPService.instance.loadProducts()
     }
 
     @IBAction func restoreBtnWasPressed(_ sender: Any) {
@@ -48,3 +51,12 @@ class StorefrontVC: UIViewController, UICollectionViewDelegate, UICollectionView
     
 }
 
+
+extension StorefrontVC: IAPServiceDelegate {
+    
+    func iapProductLoaded() {
+        print("LOADED")
+    }
+    
+    
+}
