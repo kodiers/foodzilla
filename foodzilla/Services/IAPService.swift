@@ -33,7 +33,10 @@ class IAPService: NSObject, SKProductsRequestDelegate {
     }
     
     func productIdToStringSet() {
-        productIds.insert(IAP_MEAL_ID)
+        let ids = [IAP_HID_ADS_ID, IAP_MEAL_ID]
+        for id in ids {
+            productIds.insert(id)
+        }
     }
     
     func requestProducts(forIds ids: Set<String>) {
@@ -66,6 +69,7 @@ extension IAPService: SKPaymentTransactionObserver {
             switch transaction.transactionState {
             case .purchased:
                 SKPaymentQueue.default().finishTransaction(transaction)
+                complete(transaction: transaction)
                 sendNotificationFor(status: .purchased, withIdentifier: transaction.payment.productIdentifier)
                 break
             case .restored:
@@ -82,6 +86,22 @@ extension IAPService: SKPaymentTransactionObserver {
                 break
             }
         }
+    }
+    
+    func complete(transaction: SKPaymentTransaction) {
+        switch transaction.payment.productIdentifier {
+        case IAP_MEAL_ID:
+            break
+        case IAP_HID_ADS_ID:
+            setNonConsumablePurchaseStatus(true)
+            break
+        default:
+            break
+        }
+    }
+    
+    func setNonConsumablePurchaseStatus(_ status: Bool) {
+        UserDefaults.standard.set(status, forKey: "nonConsumablePurchaseWasMade")
     }
     
     func sendNotificationFor(status: PurchaseStatus, withIdentifier identifier: String?) {

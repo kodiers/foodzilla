@@ -18,6 +18,7 @@ class DetailVC: UIViewController {
     @IBOutlet weak var hideAddBtn: UIButton!
     
     public private(set) var item: Item!
+    private var hiddenStatus: Bool = UserDefaults.standard.bool(forKey: "nonConsumablePurchaseWasMade")
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -35,6 +36,11 @@ class DetailVC: UIViewController {
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         NotificationCenter.default.removeObserver(self)
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        showOrHideAds()
     }
     
 
@@ -56,6 +62,8 @@ class DetailVC: UIViewController {
             debugPrint("meal purchased")
             break
         case IAP_HID_ADS_ID:
+            uglyAdView.isHidden = true
+            hideAddBtn.isHidden = true
             break
         default:
             break
@@ -65,6 +73,11 @@ class DetailVC: UIViewController {
     @objc func handleFailure() {
         buyItemBtn.isEnabled = true
         debugPrint("Purchase failed")
+    }
+    
+    func showOrHideAds() {
+        uglyAdView.isHidden = hiddenStatus
+        hideAddBtn.isHidden = hiddenStatus
     }
 
     @IBAction func buyBtnWasPressed(_ sender: Any) {
