@@ -20,9 +20,19 @@ class StorefrontVC: UIViewController, UICollectionViewDelegate, UICollectionView
         
         IAPService.instance.delegate = self
         IAPService.instance.loadProducts()
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(showAlert), name: NSNotification.Name(rawValue: IAPServiceRestoreNotification), object: nil)
     }
 
     @IBAction func restoreBtnWasPressed(_ sender: Any) {
+        let alertVC = UIAlertController(title: "Restore purchases?", message: "Do you want to restore purchases?", preferredStyle: .actionSheet)
+        let action = UIAlertAction(title: "Restore", style: .default) { (action) in
+            IAPService.instance.restorePurchases()
+        }
+        let cancel = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        alertVC.addAction(action)
+        alertVC.addAction(cancel)
+        present(alertVC, animated: true, completion: nil)
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -47,6 +57,13 @@ class StorefrontVC: UIViewController, UICollectionViewDelegate, UICollectionView
         }
         detailVc.initData(forItem: foodItems[indexPath.row])
         present(detailVc, animated: true, completion: nil)
+    }
+    
+    @objc func showAlert() {
+        let alertVC = UIAlertController(title: "Success", message: "Your purchases restored", preferredStyle: .alert)
+        let action = UIAlertAction(title: "Ok", style: .default, handler: nil)
+        alertVC.addAction(action)
+        present(alertVC, animated: true, completion: nil)
     }
     
 }

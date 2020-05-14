@@ -18,6 +18,7 @@
 		AC242769245A36D5002D5A49 /* Product.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC242768245A36D5002D5A49 /* Product.swift */; };
 		AC24276B245A36ED002D5A49 /* PurchaseStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC24276A245A36ED002D5A49 /* PurchaseStatus.swift */; };
 		AC44DDA024579E2500188FDE /* DetailVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC44DD9F24579E2500188FDE /* DetailVC.swift */; };
+		ACAC769E246DF51800F61E1E /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ACAC769D246DF51800F61E1E /* StoreKit.framework */; };
 		ACE544B02458E0C000848851 /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACE544AF2458E0C000848851 /* Item.swift */; };
 		ACE544B22458E17000848851 /* FoodItems.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACE544B12458E17000848851 /* FoodItems.swift */; };
 		ACE544B42458E2B400848851 /* ItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACE544B32458E2B400848851 /* ItemCell.swift */; };
@@ -37,6 +38,7 @@
 		AC242768245A36D5002D5A49 /* Product.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Product.swift; sourceTree = "<group>"; };
 		AC24276A245A36ED002D5A49 /* PurchaseStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PurchaseStatus.swift; sourceTree = "<group>"; };
 		AC44DD9F24579E2500188FDE /* DetailVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailVC.swift; sourceTree = "<group>"; };
+		ACAC769D246DF51800F61E1E /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		ACE544AF2458E0C000848851 /* Item.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Item.swift; sourceTree = "<group>"; };
 		ACE544B12458E17000848851 /* FoodItems.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodItems.swift; sourceTree = "<group>"; };
 		ACE544B32458E2B400848851 /* ItemCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemCell.swift; sourceTree = "<group>"; };
@@ -47,6 +49,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				ACAC769E246DF51800F61E1E /* StoreKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -58,6 +61,7 @@
 			children = (
 				AC0303DC2452608E00309585 /* foodzilla */,
 				AC0303DB2452608E00309585 /* Products */,
+				ACAC769C246DF51800F61E1E /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -103,6 +107,14 @@
 				AC24276A245A36ED002D5A49 /* PurchaseStatus.swift */,
 			);
 			path = Enums;
+			sourceTree = "<group>";
+		};
+		ACAC769C246DF51800F61E1E /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				ACAC769D246DF51800F61E1E /* StoreKit.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 		ACE544AB2458E07D00848851 /* Controller */ = {
