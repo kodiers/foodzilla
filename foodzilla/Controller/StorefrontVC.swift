@@ -35,6 +35,10 @@ class StorefrontVC: UIViewController, UICollectionViewDelegate, UICollectionView
         present(alertVC, animated: true, completion: nil)
     }
     
+    @IBAction func subscribeBtnPressed(_ sender: Any) {
+        IAPService.instance.attemptPurchaseForItemWith(productIndex: .monthlySub)
+    }
+    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return foodItems.count
     }

@@ -97,6 +97,20 @@
                                     <action selector="restoreBtnWasPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="uqp-bb-Y9V"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Meb-Xz-XOj">
+                                <rect key="frame" x="286" y="43" width="50" height="53"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="50" id="I45-hy-Zre"/>
+                                    <constraint firstAttribute="height" constant="50" id="ehx-Jd-3oJ"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="AvenirNext-Bold" family="Avenir Next" pointSize="30"/>
+                                <state key="normal" title="$">
+                                    <color key="titleColor" red="0.42745098039215684" green="0.71372549019607845" blue="0.76470588235294112" alpha="1" colorSpace="calibratedRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="subscribeBtnPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="OnN-E4-5Dd"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>

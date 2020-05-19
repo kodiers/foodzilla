@@ -11,7 +11,7 @@ import Foundation
 // MARK: - IAP Identifiers
 let IAP_MEAL_ID = "com.techforline.foodzilla.meal"
 let IAP_HID_ADS_ID = "com.techforline.foodzilla.hideads"
-let IAP_SUBSCRIPTION = "com.techforline.foodzilla.subscription"
+let IAP_MEALTIME_MONTHLY_SUB = "com.techforline.foodzilla.subscription"
 
 // MARK: - Notification Identifiers
 let IAPServicePurchaseNotification = "IAPServicePurchaseNotification"

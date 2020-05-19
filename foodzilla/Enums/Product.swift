@@ -11,4 +11,5 @@ import Foundation
 enum Product: Int {
     case hideAds = 0
     case meal = 1
+    case monthlySub = 2
 }

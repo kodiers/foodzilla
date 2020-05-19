@@ -86,6 +86,8 @@ class DetailVC: UIViewController {
     }
     
     @IBAction func hideAdsWasPressed(_ sender: Any) {
+        hideAddBtn.isEnabled = false
+        IAPService.instance.attemptPurchaseForItemWith(productIndex: .hideAds)
     }
     
     @IBAction func closeBtnWasPressed(_ sender: Any) {
