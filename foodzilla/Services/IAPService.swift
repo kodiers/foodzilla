@@ -64,6 +64,32 @@ class IAPService: NSObject, SKProductsRequestDelegate {
     func restorePurchases() {
         SKPaymentQueue.default().restoreCompletedTransactions()
     }
+    
+    func uploadReceipt(completionHandler: @escaping (Bool) -> Void) {
+        guard let receiptUrl = Bundle.main.appStoreReceiptURL, let receipt = try? Data(contentsOf: receiptUrl).base64EncodedString() else { completionHandler(false)
+            return
+        }
+        let body = [
+            "receipt-data": receipt,
+            "password": APP_SECRET
+        ]
+        let bodyData = try! JSONSerialization.data(withJSONObject: body, options: [])
+        let url = URL(string: "https://sandbox.itunes.apple.com/verifyReceipt")
+        var request = URLRequest(url: url!)
+        request.httpMethod = "POST"
+        request.httpBody = bodyData
+        let task = URLSession.shared.dataTask(with: request) { (responseData, response, error) in
+            if let error = error {
+                debugPrint("ERROR: ", error as Any)
+                completionHandler(false)
+            } else if let responseData = responseData {
+                let json = try! JSONSerialization.jsonObject(with: responseData, options: [])
+                print(json)
+                completionHandler(true)
+            }
+        }
+        task.resume()
+    }
 }
 
 extension IAPService: SKPaymentTransactionObserver {
@@ -74,14 +100,13 @@ extension IAPService: SKPaymentTransactionObserver {
             case .purchased:
                 SKPaymentQueue.default().finishTransaction(transaction)
                 complete(transaction: transaction)
-                sendNotificationFor(status: .purchased, withIdentifier: transaction.payment.productIdentifier)
                 break
             case .restored:
                 SKPaymentQueue.default().finishTransaction(transaction)
                 break
             case .failed:
                 SKPaymentQueue.default().finishTransaction(transaction)
-                sendNotificationFor(status: .failed, withIdentifier: nil)
+                sendNotificationFor(status: .failed, withIdentifier: nil, orBoolean: nil)
                 break
             case .deferred:
                 break
@@ -94,13 +119,25 @@ extension IAPService: SKPaymentTransactionObserver {
     }
     
     func paymentQueueRestoreCompletedTransactionsFinished(_ queue: SKPaymentQueue) {
-        sendNotificationFor(status: .restored, withIdentifier: nil)
+        sendNotificationFor(status: .restored, withIdentifier: nil, orBoolean: nil)
         setNonConsumablePurchaseStatus(true)
     }
     
     func complete(transaction: SKPaymentTransaction) {
         switch transaction.payment.productIdentifier {
+        case IAP_MEALTIME_MONTHLY_SUB:
+            uploadReceipt { (valid) in
+                if valid {
+                    debugPrint("SUB VALID!!!!!")
+                } else {
+                    debugPrint("SUB INVALID!!!")
+                }
+            }
+            sendNotificationFor(status: .subscribed, withIdentifier: transaction.payment.productIdentifier, orBoolean: true)
+            setNonConsumablePurchaseStatus(true)
+            break
         case IAP_MEAL_ID:
+            sendNotificationFor(status: .purchased, withIdentifier: transaction.payment.productIdentifier, orBoolean: nil)
             break
         case IAP_HID_ADS_ID:
             setNonConsumablePurchaseStatus(true)
@@ -114,7 +151,7 @@ extension IAPService: SKPaymentTransactionObserver {
         UserDefaults.standard.set(status, forKey: "nonConsumablePurchaseWasMade")
     }
     
-    func sendNotificationFor(status: PurchaseStatus, withIdentifier identifier: String?) {
+    func sendNotificationFor(status: PurchaseStatus, withIdentifier identifier: String?, orBoolean bool: Bool?) {
         switch status {
         case .purchased:
             NotificationCenter.default.post(name: NSNotification.Name(IAPServicePurchaseNotification), object: identifier)
@@ -124,6 +161,9 @@ extension IAPService: SKPaymentTransactionObserver {
             break
         case .failed:
             NotificationCenter.default.post(name: NSNotification.Name(IAPServiceFailureNotification), object: nil)
+            break
+        case .subscribed:
+            NotificationCenter.default.post(name: NSNotification.Name(IAPServiceSubsInfoChangedNotification), object: bool)
             break
         }
     }

@@ -17,3 +17,6 @@ let IAP_MEALTIME_MONTHLY_SUB = "com.techforline.foodzilla.subscription"
 let IAPServicePurchaseNotification = "IAPServicePurchaseNotification"
 let IAPServiceRestoreNotification = "IAPServiceRestoreNotification"
 let IAPServiceFailureNotification = "IAPServiceFailureNotification"
+let IAPServiceSubsInfoChangedNotification = "IAPServiceSubsInfoChangedNotification"
+
+let APP_SECRET = "1349bbd2e1d9496f86f4f7459b03fa0a"

@@ -11,6 +11,7 @@ import UIKit
 class StorefrontVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource  {
 
     @IBOutlet weak var collectionView: UICollectionView!
+    @IBOutlet weak var subscriptionStatusLbl: UILabel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -22,6 +23,7 @@ class StorefrontVC: UIViewController, UICollectionViewDelegate, UICollectionView
         IAPService.instance.loadProducts()
         
         NotificationCenter.default.addObserver(self, selector: #selector(showAlert), name: NSNotification.Name(rawValue: IAPServiceRestoreNotification), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(subscriptionStatusWasChanged(_:)), name: NSNotification.Name(rawValue: IAPServiceSubsInfoChangedNotification), object: nil)
     }
 
     @IBAction func restoreBtnWasPressed(_ sender: Any) {
@@ -68,6 +70,15 @@ class StorefrontVC: UIViewController, UICollectionViewDelegate, UICollectionView
         let action = UIAlertAction(title: "Ok", style: .default, handler: nil)
         alertVC.addAction(action)
         present(alertVC, animated: true, completion: nil)
+    }
+    
+    @objc func subscriptionStatusWasChanged(_ notification: Notification) {
+        guard let status = notification.object as? Bool else { return }
+        if status {
+            // perform actions for actve subscriptions
+        } else {
+            // perform actions for expired
+        }
     }
     
 }
