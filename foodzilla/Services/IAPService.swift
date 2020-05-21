@@ -21,6 +21,7 @@ class IAPService: NSObject, SKProductsRequestDelegate {
     var products = [SKProduct]()
     var productIds = Set<String>()
     var productRequest = SKProductsRequest()
+    var expirationDate = UserDefaults.standard.value(forKey: "expirationDate") as? Date
     
     override init() {
         super.init()
@@ -65,6 +66,16 @@ class IAPService: NSObject, SKProductsRequestDelegate {
         SKPaymentQueue.default().restoreCompletedTransactions()
     }
     
+    func isSubscriptionActive(completionHandler: @escaping (Bool) -> Void) {
+        let nowDate = Date()
+        guard let expirationDate = expirationDate else { return }
+        if nowDate.isLessThan(expirationDate) {
+            completionHandler(true)
+        } else {
+            completionHandler(false)
+        }
+    }
+    
     func uploadReceipt(completionHandler: @escaping (Bool) -> Void) {
         guard let receiptUrl = Bundle.main.appStoreReceiptURL, let receipt = try? Data(contentsOf: receiptUrl).base64EncodedString() else { completionHandler(false)
             return
@@ -83,12 +94,28 @@ class IAPService: NSObject, SKProductsRequestDelegate {
                 debugPrint("ERROR: ", error as Any)
                 completionHandler(false)
             } else if let responseData = responseData {
-                let json = try! JSONSerialization.jsonObject(with: responseData, options: [])
-                print(json)
+                let json = try! JSONSerialization.jsonObject(with: responseData, options: []) as! Dictionary<String, Any>
+                let newExpirationDate = self.expirationDateFromResponse(jsonResponse: json)
+                self.setExpiration(forDate: newExpirationDate!)
                 completionHandler(true)
             }
         }
         task.resume()
+    }
+    
+    func expirationDateFromResponse(jsonResponse: Dictionary<String, Any>) -> Date? {
+        if let receiptInfo: NSArray = jsonResponse["latest_receipt_info"] as? NSArray {
+            let lastReceipt = receiptInfo.lastObject as! Dictionary<String, Any>
+            let formatter = DateFormatter()
+            formatter.dateFormat = "yyyy-MM-dd HH:mm:ss VV"
+            let expirationDate: Date = formatter.date(from: lastReceipt["expires_date"] as! String)! as Date
+            return expirationDate
+        }
+        return nil
+    }
+    
+    func setExpiration(forDate date: Date) {
+        UserDefaults.standard.set(date, forKey: "expirationDate")
     }
 }
 
@@ -99,6 +126,9 @@ extension IAPService: SKPaymentTransactionObserver {
             switch transaction.transactionState {
             case .purchased:
                 SKPaymentQueue.default().finishTransaction(transaction)
+                uploadReceipt { (valid) in
+                    
+                }
                 complete(transaction: transaction)
                 break
             case .restored:
