@@ -13,11 +13,11 @@ protocol IAPServiceDelegate {
     func iapProductLoaded()
 }
 
-class IAPService: NSObject, SKProductsRequestDelegate {
+class IAPService: SKReceiptRefreshRequest, SKProductsRequestDelegate {
     
     static let instance = IAPService()
     
-    var delegate: IAPServiceDelegate?
+    var iapDelegate: IAPServiceDelegate?
     var products = [SKProduct]()
     var productIds = Set<String>()
     var productRequest = SKProductsRequest()
@@ -52,7 +52,7 @@ class IAPService: NSObject, SKProductsRequestDelegate {
         if self.products.count == 0 {
             requestProducts(forIds: productIds)
         } else {
-            delegate?.iapProductLoaded()
+            iapDelegate?.iapProductLoaded()
         }
     }
     
@@ -64,6 +64,25 @@ class IAPService: NSObject, SKProductsRequestDelegate {
     
     func restorePurchases() {
         SKPaymentQueue.default().restoreCompletedTransactions()
+    }
+    
+    func requestDidFinish(_ request: SKRequest) {
+        uploadReceipt { (valid) in
+            if valid {
+                self.isSubscriptionActive { (active) in
+                    if active {
+                        self.sendNotificationFor(status: .subscribed, withIdentifier: nil, orBoolean: true)
+                        self.setNonConsumablePurchaseStatus(true)
+                    } else {
+                        self.sendNotificationFor(status: .subscribed, withIdentifier: nil, orBoolean: false)
+                        self.setNonConsumablePurchaseStatus(false)
+                    }
+                }
+            } else {
+                self.sendNotificationFor(status: .subscribed, withIdentifier: nil, orBoolean: false)
+                self.setNonConsumablePurchaseStatus(false)
+            }
+        }
     }
     
     func isSubscriptionActive(completionHandler: @escaping (Bool) -> Void) {
@@ -155,17 +174,6 @@ extension IAPService: SKPaymentTransactionObserver {
     
     func complete(transaction: SKPaymentTransaction) {
         switch transaction.payment.productIdentifier {
-        case IAP_MEALTIME_MONTHLY_SUB:
-            uploadReceipt { (valid) in
-                if valid {
-                    debugPrint("SUB VALID!!!!!")
-                } else {
-                    debugPrint("SUB INVALID!!!")
-                }
-            }
-            sendNotificationFor(status: .subscribed, withIdentifier: transaction.payment.productIdentifier, orBoolean: true)
-            setNonConsumablePurchaseStatus(true)
-            break
         case IAP_MEAL_ID:
             sendNotificationFor(status: .purchased, withIdentifier: transaction.payment.productIdentifier, orBoolean: nil)
             break

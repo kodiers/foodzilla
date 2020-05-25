@@ -19,7 +19,7 @@ class StorefrontVC: UIViewController, UICollectionViewDelegate, UICollectionView
         collectionView.delegate = self
         collectionView.dataSource = self
         
-        IAPService.instance.delegate = self
+        IAPService.instance.iapDelegate = self
         IAPService.instance.loadProducts()
         
         NotificationCenter.default.addObserver(self, selector: #selector(showAlert), name: NSNotification.Name(rawValue: IAPServiceRestoreNotification), object: nil)
@@ -76,8 +76,12 @@ class StorefrontVC: UIViewController, UICollectionViewDelegate, UICollectionView
         guard let status = notification.object as? Bool else { return }
         if status {
             // perform actions for actve subscriptions
+            subscriptionStatusLbl.text = "Subscription active"
+            subscriptionStatusLbl.textColor = #colorLiteral(red: 0.4666666687, green: 0.7647058964, blue: 0.2666666806, alpha: 1)
         } else {
             // perform actions for expired
+            subscriptionStatusLbl.text = "Subscription expired"
+            subscriptionStatusLbl.textColor = #colorLiteral(red: 0.8235294118, green: 0.3137254902, blue: 0.3058823529, alpha: 1)
         }
     }
     
