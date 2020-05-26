@@ -140,6 +140,7 @@
                     </view>
                     <connections>
                         <outlet property="collectionView" destination="ZRm-1O-d0z" id="CS3-RK-Kkx"/>
+                        <outlet property="foodzillaLbl" destination="H0C-va-89Y" id="9wp-hq-lTe"/>
                         <outlet property="subscriptionStatusLbl" destination="n80-Bn-hfk" id="3CW-XY-5KU"/>
                     </connections>
                 </viewController>

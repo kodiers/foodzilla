@@ -23,11 +23,6 @@ class IAPService: SKReceiptRefreshRequest, SKProductsRequestDelegate {
     var productRequest = SKProductsRequest()
     var expirationDate = UserDefaults.standard.value(forKey: "expirationDate") as? Date
     
-    override init() {
-        super.init()
-        SKPaymentQueue.default().add(self)
-    }
-    
     func loadProducts() {
          productIdToStringSet()
          requestProducts(forIds: productIds)
@@ -86,7 +81,9 @@ class IAPService: SKReceiptRefreshRequest, SKProductsRequestDelegate {
     }
     
     func isSubscriptionActive(completionHandler: @escaping (Bool) -> Void) {
+        reloadExpiryDate()
         let nowDate = Date()
+        debugPrint("Time remaining ", expirationDate!.timeIntervalSinceNow / 60, "minutes")
         guard let expirationDate = expirationDate else { return }
         if nowDate.isLessThan(expirationDate) {
             completionHandler(true)
@@ -136,6 +133,10 @@ class IAPService: SKReceiptRefreshRequest, SKProductsRequestDelegate {
     func setExpiration(forDate date: Date) {
         UserDefaults.standard.set(date, forKey: "expirationDate")
     }
+    
+    func reloadExpiryDate() {
+        expirationDate = UserDefaults.standard.value(forKey: "expirationDate") as? Date
+    }
 }
 
 extension IAPService: SKPaymentTransactionObserver {
@@ -144,22 +145,21 @@ extension IAPService: SKPaymentTransactionObserver {
         for transaction in transactions {
             switch transaction.transactionState {
             case .purchased:
-                SKPaymentQueue.default().finishTransaction(transaction)
-                uploadReceipt { (valid) in
-                    
-                }
                 complete(transaction: transaction)
+                SKPaymentQueue.default().finishTransaction(transaction)
                 break
             case .restored:
                 SKPaymentQueue.default().finishTransaction(transaction)
                 break
             case .failed:
-                SKPaymentQueue.default().finishTransaction(transaction)
                 sendNotificationFor(status: .failed, withIdentifier: nil, orBoolean: nil)
+                SKPaymentQueue.default().finishTransaction(transaction)
                 break
             case .deferred:
+                SKPaymentQueue.default().finishTransaction(transaction)
                 break
             case .purchasing:
+                debugPrint("purchasing")
                 break
             default:
                 break
@@ -174,6 +174,10 @@ extension IAPService: SKPaymentTransactionObserver {
     
     func complete(transaction: SKPaymentTransaction) {
         switch transaction.payment.productIdentifier {
+        case IAP_MEALTIME_MONTHLY_SUB:
+            self.sendNotificationFor(status: .subscribed, withIdentifier: nil, orBoolean: true)
+            self.setNonConsumablePurchaseStatus(true)
+            break
         case IAP_MEAL_ID:
             sendNotificationFor(status: .purchased, withIdentifier: transaction.payment.productIdentifier, orBoolean: nil)
             break
